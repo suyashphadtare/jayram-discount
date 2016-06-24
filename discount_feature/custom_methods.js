@@ -1,5 +1,5 @@
 
-CustomerToDOCommuincation = frappe.ui.form.Controller.extend({
+CustomerToDOCommunication = frappe.ui.form.Controller.extend({
 	refresh:function(){
 		var frm = this.frm;
 		if(!frm.doc.__islocal){
@@ -18,7 +18,7 @@ CustomerToDOCommuincation = frappe.ui.form.Controller.extend({
 })
 
 
-ContactCommuincationToDO = frappe.ui.form.Controller.extend({
+ContactCommunicationToDO = frappe.ui.form.Controller.extend({
 	refresh:function(){
 		var frm = this.frm;
 		if(!frm.doc.__islocal){
@@ -38,11 +38,13 @@ ContactCommuincationToDO = frappe.ui.form.Controller.extend({
 
 
 
-CommuincationToDO = frappe.ui.form.Controller.extend({
+CommunicationToDO = frappe.ui.form.Controller.extend({
 	refresh:function(){
 		var frm = this.frm;
 		if(!frm.doc.__islocal){
-			var mapper = [ {"doctype":"ToDo", "route_options":{"reference_type":"Communication", "reference_name":frm.doc.name} } ];
+			var ref_type = frm.doc.reference_doctype == "Contact" ? "Contact" : "Communication"
+			var ref_name = frm.doc.reference_doctype == "Contact" ? frm.doc.reference_name : frm.doc.name
+			var mapper = [ {"doctype":"ToDo", "route_options":{"reference_type":ref_type, "reference_name":ref_name } } ];
 			
 			mapper.forEach(function(doctype, i) {
 				frm.add_custom_button(__(doctype["doctype"]), function() {
